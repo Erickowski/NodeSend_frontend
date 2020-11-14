@@ -3,11 +3,12 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 
 import Layout from "../components/Layout";
+import Alerta from "../components/Alerta";
 
 import AuthContext from "../context/auth/authContext";
 
 export default function CrearCuenta() {
-  const { registrarUsuario } = useContext(AuthContext);
+  const { registrarUsuario, mensaje } = useContext(AuthContext);
 
   // Formulario y validación con formik y yup
   const formik = useFormik({
@@ -36,6 +37,7 @@ export default function CrearCuenta() {
         <h2 className="text-4xl font-sans font-bold text-gray-800 text-center my-4">
           Crear cuenta
         </h2>
+        {mensaje && <Alerta />}
         <div className="flex justify-center mt-5">
           <div className="w-full max-w-lg">
             <form
