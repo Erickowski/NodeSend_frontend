@@ -2,11 +2,18 @@ import React, { useCallback, useContext } from "react";
 import { useDropzone } from "react-dropzone";
 
 import AppContext from "../context/app/appContext";
+import AuthContext from "../context/auth/authContext";
+
+import Formulario from "./Formulario";
 
 const Dropzone = () => {
+  // Context de app
   const { mostrarAlerta, subirArchivo, cargando, crearEnlace } = useContext(
     AppContext
   );
+
+  // Context de auth
+  const { usuario, autenticado } = useContext(AuthContext);
 
   const onDropAccepted = useCallback((acceptedFiles) => {
     // Crear un form data
@@ -47,6 +54,7 @@ const Dropzone = () => {
         <div className="mt-10 w-full">
           <h4 className="text-2xl font-bold text-center mb-4">Archivos</h4>
           <ul>{archivos}</ul>
+          {autenticado && <Formulario />}
           {cargando ? (
             <p className="my-10 text-center text-gray-600">
               Subiendo archivo...
