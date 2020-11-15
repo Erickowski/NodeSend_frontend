@@ -9,7 +9,7 @@ import tokenAuth from "../../config/tokenAuth";
 import {
   REGISTRO_EXITOSO,
   REGISTRO_ERROR,
-  LIMPIAR_ALERTA,
+  OCULTAR_ALERTA,
   LOGIN_EXITOSO,
   LOGIN_ERROR,
   USUARIO_AUTENTICADO,
@@ -45,7 +45,7 @@ const AuthState = ({ children }) => {
     // Limpiar la alerta después de 3 segundos
     setTimeout(() => {
       dispatch({
-        type: LIMPIAR_ALERTA,
+        type: OCULTAR_ALERTA,
       });
     }, 3000);
   };
@@ -66,7 +66,7 @@ const AuthState = ({ children }) => {
     }
     setTimeout(() => {
       dispatch({
-        type: LIMPIAR_ALERTA,
+        type: OCULTAR_ALERTA,
       });
     }, 3000);
   };

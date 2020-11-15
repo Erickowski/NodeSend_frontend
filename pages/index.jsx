@@ -3,12 +3,16 @@ import Link from "next/link";
 
 import Layout from "../components/Layout";
 import Dropzone from "../components/Dropzone";
+import Alerta from "../components/Alerta";
 
 import AuthContext from "../context/auth/authContext";
+import AppContext from "../context/app/appContext";
 
 export default function Home() {
   // Extraer el usuario autenticado del Storage
   const { usuarioAutenticado } = useContext(AuthContext);
+  // Extraer el mensaje de error de los archivos
+  const { mensaje_archivo } = useContext(AppContext);
 
   useEffect(() => {
     usuarioAutenticado();
@@ -17,6 +21,7 @@ export default function Home() {
   return (
     <Layout>
       <div className="md:w-4/5 xl:w-3/5 mx-auto mb-32">
+        {mensaje_archivo && <Alerta />}
         <div className="lg:flex md:shadow-lg p-5 bg-white rounded-lg py-10">
           <Dropzone />
           <div className="md:flex-1 mb-3 mx-2 mt-16 lg:mt-0">

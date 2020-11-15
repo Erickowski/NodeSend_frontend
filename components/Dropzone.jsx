@@ -1,8 +1,12 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useContext } from "react";
 import { useDropzone } from "react-dropzone";
+
 import clienteAxios from "../config/axios";
+import AppContext from "../context/app/appContext";
 
 const Dropzone = () => {
+  const { mostrarAlerta } = useContext(AppContext);
+
   const onDropAccepted = useCallback(async (acceptedFiles) => {
     // Crear un form data
     const formData = new FormData();
@@ -13,7 +17,9 @@ const Dropzone = () => {
   }, []);
 
   const onDropRejected = () => {
-    console.log("No se pudo subir");
+    mostrarAlerta(
+      "No se pudo subir, el límite es 1MB, obten una cuenta gratis."
+    );
   };
 
   // Extraer contenido de Dropzone
