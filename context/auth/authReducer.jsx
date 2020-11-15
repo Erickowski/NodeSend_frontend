@@ -2,8 +2,8 @@ import {
   REGISTRO_EXITOSO,
   REGISTRO_ERROR,
   LIMPIAR_ALERTA,
-  LOGIN_ERROR,
   LOGIN_EXITOSO,
+  LOGIN_ERROR,
 } from "../../types";
 
 const AuthReducer = (state, action) => {
@@ -19,6 +19,13 @@ const AuthReducer = (state, action) => {
       return {
         ...state,
         mensaje: null,
+      };
+    case LOGIN_EXITOSO:
+      localStorage.setItem("token", action.payload);
+      return {
+        ...state,
+        token: action.payload,
+        autenticado: true,
       };
     default:
       return state;

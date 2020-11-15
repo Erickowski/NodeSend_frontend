@@ -1,4 +1,5 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
+import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
@@ -8,7 +9,15 @@ import Layout from "../components/Layout";
 import Alerta from "../components/Alerta";
 
 export default function Login() {
-  const { mensaje, iniciarSesion } = useContext(AuthContext);
+  const { mensaje, iniciarSesion, autenticado } = useContext(AuthContext);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (autenticado) {
+      router.push("/");
+    }
+  }, [autenticado]);
 
   // Formulario y validación con formik y yup
   const formik = useFormik({
