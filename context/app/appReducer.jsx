@@ -34,6 +34,11 @@ const AppReducer = (state, action) => {
         nombre_original: action.payload.nombre_original,
         cargando: null,
       };
+    case CREAR_ENLACE_EXITO:
+      return {
+        ...state,
+        url: action.payload,
+      };
     default:
       return state;
   }

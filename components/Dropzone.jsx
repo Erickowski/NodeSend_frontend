@@ -4,13 +4,14 @@ import { useDropzone } from "react-dropzone";
 import AppContext from "../context/app/appContext";
 
 const Dropzone = () => {
-  const { mostrarAlerta, subirArchivo, cargando } = useContext(AppContext);
+  const { mostrarAlerta, subirArchivo, cargando, crearEnlace } = useContext(
+    AppContext
+  );
 
   const onDropAccepted = useCallback((acceptedFiles) => {
     // Crear un form data
     const formData = new FormData();
     formData.append("archivo", acceptedFiles[0]);
-    console.log(acceptedFiles[0].path);
     subirArchivo(formData, acceptedFiles[0].path);
   }, []);
 
@@ -39,10 +40,6 @@ const Dropzone = () => {
       </p>
     </li>
   ));
-
-  const crearEnlace = () => {
-    console.log("Creando el enlace...");
-  };
 
   return (
     <div className="md:flex-1 mb-3 mx-2 mt-16 lg:mt-0 flex flex-col items-center justify-center border-dashed border-gray-400 border-2 bg-gray-100 px-4">

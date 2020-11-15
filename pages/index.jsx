@@ -31,7 +31,7 @@ export default function Home() {
             <p className="text-lg leading-loose">
               <span className="text-red-500 font-bold">ReactNodeSend </span>
               te permite compartir archivos con cifrado de extremo a extremo y
-              un archivo que es eliminado después de ser descargdo. Así que
+              un archivo que es eliminado después de ser descargado. Así que
               puedes mantener lo que compartes en privado y asegurarte de que
               tus cosas no permanezcan en línea para siempre.
             </p>
