@@ -1,10 +1,11 @@
-import { useState } from "react";
-import { useFormik } from "formik";
-import * as Yup from "yup";
+import { useContext, useState } from "react";
 
 import clienteAxios from "../../config/axios";
 
 import Layout from "../../components/Layout";
+import Alerta from "../../components/Alerta";
+
+import AppContext from "../../context/app/appContext";
 
 export async function getServerSideProps({ params: { enlace } }) {
   const respuesta = await clienteAxios.get(`/api/enlaces/${enlace}`);
@@ -26,20 +27,35 @@ export async function getServerSidePaths() {
 }
 
 export default function Enlace({ enlace }) {
-  const [password, setPassword] = useState(enlace.password);
+  const [hasPassword, setHasPassword] = useState(enlace.password);
+  const [password, setPassword] = useState("");
 
-  const verificarPassword = (e) => {
+  const { mostrarAlerta, mensaje_archivo } = useContext(AppContext);
+
+  const verificarPassword = async (e) => {
     e.preventDefault();
-    console.log("Verificando...");
+    const data = {
+      password,
+    };
+    try {
+      const resultado = await clienteAxios.post(
+        `/api/enlaces/${enlace.enlace}`,
+        data
+      );
+      setHasPassword(resultado.data.password);
+    } catch (error) {
+      mostrarAlerta(error.response.data.msg);
+    }
   };
 
   return (
     <Layout>
-      {password ? (
+      {hasPassword ? (
         <>
           <p className="text-center">
             Este enlace está protegido por un password, colocalo a continuación
           </p>
+          {mensaje_archivo && <Alerta />}
           <div className="flex justify-center mt-5">
             <div className="w-full max-w-lg">
               <form
@@ -59,6 +75,7 @@ export default function Enlace({ enlace }) {
                     className="shadow appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     id="password"
                     placeholder="Password del archivo"
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
                 <input
