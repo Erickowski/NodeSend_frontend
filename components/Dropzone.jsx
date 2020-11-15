@@ -1,9 +1,9 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import clienteAxios from "../config/axios";
 
 const Dropzone = () => {
-  const onDrop = useCallback(async (acceptedFiles) => {
+  const onDropAccepted = useCallback(async (acceptedFiles) => {
     // Crear un form data
     const formData = new FormData();
     formData.append("archivo", acceptedFiles[0]);
@@ -12,13 +12,17 @@ const Dropzone = () => {
     console.log(resultado.data);
   }, []);
 
+  const onDropRejected = () => {
+    console.log("No se pudo subir");
+  };
+
   // Extraer contenido de Dropzone
   const {
     getRootProps,
     getInputProps,
     isDragActive,
     acceptedFiles,
-  } = useDropzone({ onDrop });
+  } = useDropzone({ onDropAccepted, onDropRejected, maxSize: 1000000 });
 
   const archivos = acceptedFiles.map((archivo) => (
     <li
@@ -32,29 +36,46 @@ const Dropzone = () => {
     </li>
   ));
 
+  const crearEnlace = () => {
+    console.log("Creando el enlace...");
+  };
+
   return (
     <div className="md:flex-1 mb-3 mx-2 mt-16 lg:mt-0 flex flex-col items-center justify-center border-dashed border-gray-400 border-2 bg-gray-100 px-4">
-      <ul>{archivos}</ul>
-      <div {...getRootProps({ className: "dropzone w-full py-32" })}>
-        <input className="h-100" {...getInputProps()} />
-        {isDragActive ? (
-          <p className="text-2xl text-center text-gray-600">
-            Suelta el archivo
-          </p>
-        ) : (
-          <div className="text-center">
+      {acceptedFiles.length > 0 ? (
+        <div className="mt-10 w-full">
+          <h4 className="text-2xl font-bold text-center mb-4">Archivos</h4>
+          <ul>{archivos}</ul>
+          <button
+            type="button"
+            className="bg-blue-700 w-full py-3 rounded-lg text-white my-10 hover:bg-blue-800"
+            onClick={() => crearEnlace()}
+          >
+            Crear enlace
+          </button>
+        </div>
+      ) : (
+        <div {...getRootProps({ className: "dropzone w-full py-32" })}>
+          <input className="h-100" {...getInputProps()} />
+          {isDragActive ? (
             <p className="text-2xl text-center text-gray-600">
-              Selecciona un archivo y arrastalo aquí
+              Suelta el archivo
             </p>
-            <button
-              type="button"
-              className="bg-blue-700 w-full py-3 rounded-lg text-white my-10 hover:bg-blue-800"
-            >
-              Selecciona archivos para subir
-            </button>
-          </div>
-        )}
-      </div>
+          ) : (
+            <div className="text-center">
+              <p className="text-2xl text-center text-gray-600">
+                Selecciona un archivo y arrastalo aquí
+              </p>
+              <button
+                type="button"
+                className="bg-blue-700 w-full py-3 rounded-lg text-white my-10 hover:bg-blue-800"
+              >
+                Selecciona archivos para subir
+              </button>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };
