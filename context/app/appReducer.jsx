@@ -7,6 +7,7 @@ import {
   CREAR_ENLACE_EXITO,
   CREAR_ENLACE_ERROR,
   LIMPIAR_STATE,
+  AGREGAR_PASSWORD,
 } from "../../types";
 
 const AppReducer = (state, action) => {
@@ -51,6 +52,11 @@ const AppReducer = (state, action) => {
         password: "",
         autor: null,
         url: "",
+      };
+    case AGREGAR_PASSWORD:
+      return {
+        ...state,
+        password: action.payload,
       };
     default:
       return state;
