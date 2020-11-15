@@ -5,7 +5,7 @@ import AuthReducer from "./authReducer";
 
 import clienteAxios from "../../config/axios";
 
-import { REGISTRO_EXITOSO } from "../../types";
+import { REGISTRO_EXITOSO, REGISTRO_ERROR, LIMPIAR_ALERTA } from "../../types";
 
 const AuthState = ({ children }) => {
   // definir un state inicial
@@ -28,8 +28,17 @@ const AuthState = ({ children }) => {
         payload: respuesta.data.msg,
       });
     } catch (error) {
-      console.log(error);
+      dispatch({
+        type: REGISTRO_ERROR,
+        payload: error.response.data.msg,
+      });
     }
+    // Limpiar la alerta después de 3 segundos
+    setTimeout(() => {
+      dispatch({
+        type: LIMPIAR_ALERTA,
+      });
+    }, 3000);
   };
 
   // Usuario autenticado
