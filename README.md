@@ -25,3 +25,7 @@ $ npm run build && npm run export
 - TailwindCSS
 - Axios
 - Dropzone
+
+## 💣 Despliegue
+
+https://nodesend-cliente-ruddy.vercel.app
